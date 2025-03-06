@@ -1,15 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h2>About Page</h2>
+    <p>Đây là trang giới thiệu về chúng tôi.</p>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+<script setup>
+
+</script>
+
+<style scoped>
+
 </style>
