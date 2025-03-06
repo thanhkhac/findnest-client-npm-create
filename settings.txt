@@ -1,0 +1,11 @@
+Các cài đặt:
+    Piana: Yes
+    Router: Yes
+    TypeScipt: No
+    Các lựa chọn liên quan tới testing: No
+
+Các câu lệnh đã sử dụng:
+    npm create
+    npm install
+    npm install bootstrap
+
