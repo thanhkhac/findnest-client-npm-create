@@ -1,5 +1,5 @@
 Các cài đặt:
-    Piana: Yes
+    Pinia: Yes
     Router: Yes
     TypeScipt: No
     Các lựa chọn liên quan tới testing: No
