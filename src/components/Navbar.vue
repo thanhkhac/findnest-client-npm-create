@@ -24,7 +24,7 @@
             <RouterLink to="/about" class="nav-link text-dark my-hover-underline">Liên hệ</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark my-hover-underline">Đăng tin</a>
+            <RouterLink to="/post/create" class="nav-link text-dark my-hover-underline">Đăng bài</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/search" class="nav-link text-dark my-hover-underline">Tìm kiếm</RouterLink>

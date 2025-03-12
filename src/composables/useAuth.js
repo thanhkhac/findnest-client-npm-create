@@ -29,17 +29,25 @@ export function useAuth() {
   }
 
   const fetchUser = async () => {
-    try {
-      const response = await AuthService.fetchUser()
-      user.value = response.data
-    } catch (error) {
-      console.error('Fetch user error:', error)
+    const token = localStorage.getItem('accessToken'); // Kiểm tra token trước khi fetch
+    if (!token) {
+      console.warn('No accessToken found, skipping fetchUser()');
+      return;
     }
-  }
+
+    try {
+      const response = await AuthService.fetchUser();
+      user.value = response.data;
+    } catch (error) {
+      console.error('Fetch user error:', error);
+    }
+  };
 
   onMounted(() => {
-    fetchUser() // Fetch user info on component mount
-  })
+    if (localStorage.getItem('accessToken')) {
+      fetchUser(); // Chỉ gọi nếu có accessToken
+    }
+  });
 
   return {
     user,

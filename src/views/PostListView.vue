@@ -7,7 +7,7 @@
 
   const formData = ref({
     isNegotiatedPrice: false,
-    isAllPrice: false,
+    isAllPrice: true,
     minArea: null,
     maxArea: null,
     minLat: null,
@@ -87,7 +87,6 @@
 
   <template>
     <SearchBar :defaultData="formData" @update="handleSearchBarUpdate" />
-    <button @click="submit" type="submit">Tìm kiếm</button>
 
     <a-layout>
       <a-layout>

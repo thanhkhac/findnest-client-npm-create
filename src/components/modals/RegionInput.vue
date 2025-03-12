@@ -105,6 +105,16 @@ const submit = () => {
   });
 }
 
+watch([selectedProvince, selectedDistrict, selectedWard], async ([newProvince, newDistrict, newWard]) => {
+  emit('update', {
+    province: selectedProvince.value,
+    district: selectedDistrict.value,
+    ward: selectedWard.value
+  });
+});
+
+
+
 defineExpose({ submit,reset });
 
 const emit = defineEmits(['update']);

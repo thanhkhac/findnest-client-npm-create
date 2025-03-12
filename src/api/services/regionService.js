@@ -11,7 +11,12 @@ const RegionService = {
 
   getWards(districtCode) {
     return apiClient.get(`/region/ward/${districtCode}`);
+  },
+
+  getFullAddress(code) {
+    return apiClient.get(`/region/fullname/${code}`);
   }
+
 };
 
 export default RegionService;

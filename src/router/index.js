@@ -4,6 +4,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import AboutView from '@/views/AboutView.vue'
 import PostListView from '@/views/PostListView.vue'
 import LoginView from '@/views/LoginView.vue'
+import CreatePost from '@/views/CreatePost.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,7 @@ const router = createRouter({
         { path: 'about', component: AboutView },
         { path: 'search', component: PostListView },
         { path: 'login', component: LoginView },
+        { path: 'post/create', component: CreatePost },
       ]
     },
   ],
