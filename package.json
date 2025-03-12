@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -19,15 +20,19 @@
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vue-leaflet": "^0.1.0",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.20.1",
-    "eslint-plugin-vue": "^9.32.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-vue": "^9.33.0",
     "prettier": "^3.5.1",
     "typescript": "^5.8.2",
     "vite": "^6.1.0",

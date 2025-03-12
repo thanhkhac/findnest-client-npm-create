@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, ref } from 'vue'
+  import { ref } from 'vue'
   import OsmMap from './OsmMap.vue';
   import RegionInput from '@/components/modals/RegionInput.vue'       // Đường dẫn đến OsmMap
 
@@ -12,6 +12,7 @@
     wardCode: null,
     latitude: null,
     longitude: null,
+    address:null
   });
 
   // Xử lý khi RegionInput emit dữ liệu
@@ -49,8 +50,8 @@
         districtCode: formData.districtCode,
         wardCode: formData.wardCode
       }"
-      @update="handleRegionUpdate"
       class="d-flex mb-3"
+      @update="handleRegionUpdate"
     />
 
     <!-- OSM Map -->
@@ -60,7 +61,7 @@
       :ward-code="formData.wardCode"
       @update:coordinates="handleCoordinatesUpdate"
     />
-
+    <input v-model="formData.address" type="text" autocomplete="address" class="form-control mt-3" placeholder="Địa chỉ cụ thể (Nếu có)">
 <!--    <iframe-->
 <!--      class="w-100"-->
 <!--      style="height: 500px"-->
