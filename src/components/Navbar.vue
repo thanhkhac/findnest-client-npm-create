@@ -1,7 +1,3 @@
-<script setup>
-import { RouterLink } from 'vue-router'
-</script>
-
 <template>
   <nav
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
@@ -34,29 +30,58 @@ import { RouterLink } from 'vue-router'
             <RouterLink to="/search" class="nav-link text-dark my-hover-underline">Tìm kiếm</RouterLink>
           </li>
         </ul>
+        <ul class="navbar-nav">
+          <li v-if="user" class="nav-item">
+            <span class="nav-link">Hello, {{ user.fullName }}</span>
+          </li>
+          <li v-if="user" class="nav-item">
+            <button class="btn btn-outline-danger" @click="handleLogout">Đăng xuất</button>
+          </li>
+          <li v-else class="nav-item">
+            <router-link to="/login" class="nav-link text-dark my-hover-underline">Đăng nhập</router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 </template>
 
+
+<script setup>
+  import { RouterLink } from 'vue-router'
+  import { useAuth } from '@/composables/useAuth'
+  import { onMounted } from 'vue'
+
+  const { user, logout, fetchUser } = useAuth()
+
+  const handleLogout = async () => {
+    await logout()
+  }
+
+  onMounted(() => {
+    fetchUser()
+  })
+
+</script>
+
 <style scoped>
-.my-hover-underline {
-  position: relative;
-  text-decoration: none;
-  display: inline-block;
-}
+  .my-hover-underline {
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-.my-hover-underline:after {
-  display: block;
-  content: '';
-  border-bottom: solid 3px #dc3545;
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
-  transform-origin: 100% 50%;
-}
+  .my-hover-underline:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px #dc3545;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+    transform-origin: 100% 50%;
+  }
 
-.my-hover-underline:hover:after {
-  transform: scaleX(1);
-  transform-origin: 0 50%;
-}
+  .my-hover-underline:hover:after {
+    transform: scaleX(1);
+    transform-origin: 0 50%;
+  }
 </style>

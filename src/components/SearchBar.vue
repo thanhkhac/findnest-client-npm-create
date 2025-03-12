@@ -4,6 +4,12 @@ import ModalPrice from '@/components/modals/ModalPrice.vue';
 import ModalArea from '@/components/modals/ModalArea.vue';
 import RegionInput from '@/components/modals/RegionInput.vue';
 
+const props = defineProps({
+  defaultData: Object,
+});
+
+const emit = defineEmits(['update', 'search']);
+
 const searchBarData = ref({
   isAllPrice: false,
   minArea: null,
@@ -55,8 +61,6 @@ const submit = () => {
   regionInput.value.submit();
   emit('update', searchBarData.value);
 };
-
-const emit = defineEmits(['update', 'search']);
 </script>
 
 <template>

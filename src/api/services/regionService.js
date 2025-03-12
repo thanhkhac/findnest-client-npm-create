@@ -1,16 +1,16 @@
-import api from '@/api/index.js';
+import apiClient from '@/api/index.js';
 
 const RegionService = {
   getProvinces() {
-    return api.get('/region/province');
+    return apiClient.get('/region/province');
   },
 
   getDistricts(provinceCode) {
-    return api.get(`/region/district/${provinceCode}`);
+    return apiClient.get(`/region/district/${provinceCode}`);
   },
 
   getWards(districtCode) {
-    return api.get(`/region/ward/${districtCode}`);
+    return apiClient.get(`/region/ward/${districtCode}`);
   }
 };
 

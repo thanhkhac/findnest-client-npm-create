@@ -1,13 +1,15 @@
 import apiClient from '../index';
 
-export default {
-  login(credentials) {
-    return apiClient.post('/auth/login', credentials);
-  },
-  register(userData) {
-    return apiClient.post('/auth/register', userData);
-  },
-  logout() {
-    return apiClient.post('/auth/logout');
-  },
-};
+  const AuthService = {
+    login(credentials) {
+      return apiClient.post('/authentication/login', credentials);
+    },
+    register(userData) {
+      return apiClient.post('/authentication/register', userData);
+    },
+    fetchUser() {
+      return apiClient.get('/user/manage/info');
+    },
+  };
+
+  export default AuthService;
