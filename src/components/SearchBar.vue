@@ -1,49 +1,74 @@
-<template>
-  <div class="search-bar mb-4">
-    <div class="btn-group">
-      <button class="btn btn-outline-primary" @click="openModal('textModal')">Text</button>
-      <button class="btn btn-outline-primary" @click="openModal('rangeModal')">Range</button>
-      <button class="btn btn-outline-primary" @click="openModal('fileModal')">File</button>
-      <button class="btn btn-outline-primary" @click="openModal('customModal')">Custom</button>
-    </div>
-
-    <ModalText ref="textModal" modal-id="textModal" :initial-text="initialData.text" @submit="submitModal" />
-    <ModalRange ref="rangeModal" modal-id="rangeModal" :initial-range="initialData.range" @submit="submitModal" />
-    <ModalFile ref="fileModal" modal-id="fileModal" :initial-file="initialData.file" @submit="submitModal" />
-    <ModalCustom ref="customModal" modal-id="customModal" :initial-custom="initialData.custom" @submit="submitModal" />
-  </div>
-</template>
-
 <script setup>
-import { onMounted, ref } from 'vue'
-import { Modal } from 'bootstrap';
-import ModalText from '@/components/modals/ModalText.vue'
-import ModalRange from '@/components/modals/ModalRange.vue'
-import ModalFile from '@/components/modals/ModalFile.vue'
-import ModalCustom from '@/components/modals/ModalCustom.vue'
+import { ref, watch } from 'vue';
+import ModalPrice from '@/components/modals/ModalPrice.vue';
+import ModalArea from '@/components/modals/ModalArea.vue';
+import RegionInput from '@/components/modals/RegionInput.vue';
 
-const emit = defineEmits(['update-form']);
-defineProps(['initialData']);
-const textModal = ref(null);
-const rangeModal = ref(null);
-const fileModal = ref(null);
-const customModal = ref(null);
-
-const modals = ref({});
-
-onMounted(() => {
-  modals.value.textModal = new Modal(document.getElementById('textModal'));
-  modals.value.rangeModal = new Modal(document.getElementById('rangeModal'));
-  modals.value.fileModal = new Modal(document.getElementById('fileModal'));
-  modals.value.customModal = new Modal(document.getElementById('customModal'));
+const searchBarData = ref({
+  isAllPrice: false,
+  minArea: null,
+  maxArea: null,
+  minPrice: null,
+  maxPrice: null,
+  wardCode: null,
+  districtCode: null,
+  provinceCode: null,
 });
 
-const openModal = (modalId) => {
-  modals.value[modalId].show();
+const handleRegionUpdate = ({ province, district, ward }) => {
+  searchBarData.value.provinceCode = province;
+  searchBarData.value.districtCode = district;
+  searchBarData.value.wardCode = ward;
 };
 
-const submitModal = (data) => {
-  emit('update-form', data);
-  modals.value[Object.keys(data)[0] + 'Modal'].hide(); // Ẩn modal tương ứng
+const handleAreaUpdate = ({ minArea, maxArea }) => {
+  searchBarData.value.minArea = minArea;
+  searchBarData.value.maxArea = maxArea;
 };
+
+const handlePriceUpdate = ({ isNegotiatedPrice, isAllPrice, minPrice, maxPrice }) => {
+  searchBarData.value.isNegotiatedPrice = isNegotiatedPrice;
+  searchBarData.value.isAllPrice = isAllPrice;
+  searchBarData.value.minPrice = minPrice;
+  searchBarData.value.maxPrice = maxPrice;
+};
+
+watch(
+  searchBarData,
+  () => {
+    emit('update', searchBarData.value);
+  },
+  { deep: true }
+);
+
+watch(
+  () => props.defaultData,
+  (newVal) => {
+    Object.assign(searchBarData.value, newVal);
+  },
+  { deep: true, immediate: true }
+);
+
+const regionInput = ref(null);
+
+const submit = () => {
+  regionInput.value.submit();
+  emit('update', searchBarData.value);
+};
+
+const emit = defineEmits(['update', 'search']);
 </script>
+
+<template>
+  <div class="bg-dark bg-opacity-50 p-2 rounded mb-2 d-flex">
+    <RegionInput ref="regionInput" :defaultData="searchBarData" @update="handleRegionUpdate" class="d-flex flex-grow-1"></RegionInput>
+    <a-button @click="submit" type="primary">Tìm kiếm</a-button>
+  </div>
+
+  <div class="search-bar mb-4 d-flex">
+    <div class="d-flex w-auto justify-content-start gap-2 bg-dark bg-opacity-50 p-2 rounded">
+      <ModalPrice @update="handlePriceUpdate" />
+      <ModalArea @update="handleAreaUpdate" />
+    </div>
+  </div>
+</template>
