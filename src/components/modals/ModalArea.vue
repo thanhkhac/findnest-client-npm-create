@@ -61,13 +61,13 @@ const emit = defineEmits(['update'])
         <label>Diện tích</label>
         <a-slider
           :value="[state.minArea, state.maxArea]"
-          @update:value="([min, max]) => { state.minArea = min; state.maxArea = max; }"
           range
           :min="0"
           :max="1000"
           :step="5"
           tooltip-placement="top"
           :tooltip-formatter="(value) => value + ' m²'"
+          @update:value="([min, max]) => { state.minArea = min; state.maxArea = max; }"
         />
       </div>
 

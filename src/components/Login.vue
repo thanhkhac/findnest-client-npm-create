@@ -4,16 +4,16 @@
           <h1>Đăng nhập</h1>
           <section>
             <a-form
+              ref="loginForm"
               :model="credentials"
               :rules="rules"
-              ref="loginForm"
               @submit.prevent="handleLogin"
             >
               <hr />
               <a-form-item name="username">
                 <a-input
-                  class="form-control"
                   v-model:value="credentials.username"
+                  class="form-control"
                   placeholder="Email hoặc Tên đăng nhập"
                   type="text"
                   autocomplete="username"
@@ -21,8 +21,8 @@
               </a-form-item>
               <a-form-item name="password">
                 <a-input
-                  class="form-control"
                   v-model:value="credentials.password"
+                  class="form-control"
                   placeholder="Mật khẩu"
                   type="password"
                   autocomplete="current-password"

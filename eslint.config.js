@@ -4,6 +4,8 @@ import pluginTypeScript from '@typescript-eslint/eslint-plugin';
 import parserTypeScript from '@typescript-eslint/parser';
 import parserVue from 'vue-eslint-parser'; // Add this
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+
 
 export default [
   {
@@ -31,9 +33,11 @@ export default [
       '@typescript-eslint': pluginTypeScript,
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': 'warn',
+      // 'no-unused-vars': 'warn', // Cảnh báo thay vì lỗi
+      // '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   skipFormatting,
+  vueTsConfigs.recommended,
 ];

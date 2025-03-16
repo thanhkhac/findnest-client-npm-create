@@ -1,3 +1,7 @@
+/*
+ * File: UploadImages.vue
+ */
+
 <script setup lang="ts">
   import { ref, watch, defineProps, defineEmits, onMounted } from 'vue'
   import draggable from 'vuedraggable'

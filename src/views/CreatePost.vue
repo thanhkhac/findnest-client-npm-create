@@ -17,13 +17,13 @@
       </div>
 
       <div v-show="currentStep === 2">
-        <other-input-post @update-validated-data="handleOtherInputData" ref="otherInputPostRef" />
+        <other-input-post ref="otherInputPostRef" @update-validated-data="handleOtherInputData" />
       </div>
     </div>
 
     <div class="mt-4">
       <a-button v-if="currentStep > 0" @click="prevStep">Quay lại</a-button>
-      <a-button type="primary" @click="nextStep" class="ml-2">
+      <a-button type="primary" class="ml-2" @click="nextStep">
         {{ currentStep < 2 ? 'Tiếp theo' : 'Hoàn tất' }}
       </a-button>
     </div>

@@ -1,123 +1,146 @@
-<script setup>
-import { ref, watch, onMounted } from 'vue'
-import RegionService from '@/api/services/regionService.js';
+<!-- src/components/RegionSelector.vue -->
+<script setup lang="ts">
+  import { ref, watch, onMounted } from 'vue';
+  import RegionService from '@/api/services/regionService'; // Giả định đây là file TS
 
-const props = defineProps({
-  defaultData: Object, // Nhận dữ liệu từ SearchBar
-});
-
-const region = {
-  code: null,
-  name: '',
-  fullName: 'Tất cả',
-  codeName: '',
-}
-
-// State
-const provinces = ref([region]);
-const districts = ref([region]);
-const wards = ref([region]);
-
-const selectedProvince = ref(null);
-const selectedDistrict = ref(null);
-const selectedWard = ref(null);
-
-// Lấy danh sách tỉnh/thành phố
-const fetchProvinces = async () => {
-  try {
-    const response = await RegionService.getProvinces();
-    provinces.value = [region, ...response.data];
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
+  // Định nghĩa interface cho region
+  interface Region {
+    code: string | null;
+    name: string;
+    fullName: string;
+    codeName: string;
   }
-};
 
-// Lấy danh sách quận/huyện theo tỉnh
-const fetchDistricts = async (provinceCode) => {
-  if (!provinceCode) {
-    districts.value = [region];
-    return;
+  // Định nghĩa interface cho props
+  interface DefaultData {
+    provinceCode?: string | null;
+    districtCode?: string | null;
+    wardCode?: string | null;
   }
-  try {
-    const response = await RegionService.getDistricts(provinceCode);
-    districts.value = [region, ...response.data];
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách quận/huyện:', error);
-  }
-};
 
-// Lấy danh sách xã/phường theo quận/huyện
-const fetchWards = async (districtCode) => {
-  if (!districtCode) {
-    wards.value = [region];
-    return;
-  }
-  try {
-    const response = await RegionService.getWards(districtCode);
-    wards.value = [region, ...response.data];
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách xã/phường:', error);
-  }
-};
+  // Props
+  const props = defineProps<{
+    defaultData?: DefaultData; // Nhận dữ liệu từ SearchBar
+  }>();
 
-// Reset khi thay đổi tỉnh/quận
-watch(selectedProvince, async (newProvince) => {
-  selectedDistrict.value = null;
-  selectedWard.value = null;
-  await fetchDistricts(newProvince);
-});
+  // Emits
+  const emit = defineEmits<{
+    (e: 'update', value: { province: string | null; district: string | null; ward: string | null }): void;
+  }>();
 
-watch(selectedDistrict, async (newDistrict) => {
-  selectedWard.value = null;
-  await fetchWards(newDistrict);
-});
+  // Dữ liệu mặc định cho region
+  const region: Region = {
+    code: null,
+    name: '',
+    fullName: 'Tất cả',
+    codeName: '',
+  };
 
-// Khi trang load, nhận dữ liệu từ SearchBar
-onMounted(async () => {
-  await fetchProvinces();
+  // State
+  const provinces = ref<Region[]>([region]);
+  const districts = ref<Region[]>([region]);
+  const wards = ref<Region[]>([region]);
 
-  // Nếu có dữ liệu từ URL -> Gán vào selectedProvince/District/Ward
-  if (props.defaultData?.provinceCode) {
-    selectedProvince.value = props.defaultData.provinceCode;
-    await fetchDistricts(selectedProvince.value);
-  }
-  if (props.defaultData?.districtCode) {
-    selectedDistrict.value = props.defaultData.districtCode;
-    await fetchWards(selectedDistrict.value);
-  }
-  if (props.defaultData?.wardCode) {
-    selectedWard.value = props.defaultData.wardCode;
-  }
-});
+  const selectedProvince = ref<string | null>(null);
+  const selectedDistrict = ref<string | null>(null);
+  const selectedWard = ref<string | null>(null);
 
-const reset = () => {
-  selectedProvince.value = region.code;
-  selectedDistrict.value = region.code;
-  selectedWard.value = region.code;
-  emit('update', { province: null, district: null, ward: null });
-}
+  // Nạp dữ liệu khi mounted
+  onMounted(async () => {
+    await fetchProvinces();
 
-const submit = () => {
-  emit('update', {
-    province: selectedProvince.value,
-    district: selectedDistrict.value,
-    ward: selectedWard.value
+    // Nếu có dữ liệu từ props.defaultData -> Gán vào selectedProvince/District/Ward
+    if (props.defaultData?.provinceCode) {
+      selectedProvince.value = props.defaultData.provinceCode;
+      await fetchDistricts(selectedProvince.value);
+    }
+    if (props.defaultData?.districtCode) {
+      selectedDistrict.value = props.defaultData.districtCode;
+      await fetchWards(selectedDistrict.value);
+    }
+    if (props.defaultData?.wardCode) {
+      selectedWard.value = props.defaultData.wardCode;
+    }
   });
-}
 
-watch([selectedProvince, selectedDistrict, selectedWard], async () => {
-  emit('update', {
-    province: selectedProvince.value,
-    district: selectedDistrict.value,
-    ward: selectedWard.value
+  // Lấy danh sách tỉnh/thành phố
+  const fetchProvinces = async (): Promise<void> => {
+    try {
+      const response = await RegionService.getProvinces();
+      provinces.value = [region, ...response.data];
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
+    }
+  };
+
+  // Lấy danh sách quận/huyện theo tỉnh
+  const fetchDistricts = async (provinceCode: string | null): Promise<void> => {
+    if (!provinceCode) {
+      districts.value = [region];
+      return;
+    }
+    try {
+      const response = await RegionService.getDistricts(provinceCode);
+      districts.value = [region, ...response.data];
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách quận/huyện:', error);
+    }
+  };
+
+  // Lấy danh sách xã/phường theo quận/huyện
+  const fetchWards = async (districtCode: string | null): Promise<void> => {
+    if (!districtCode) {
+      wards.value = [region];
+      return;
+    }
+    try {
+      const response = await RegionService.getWards(districtCode);
+      wards.value = [region, ...response.data];
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách xã/phường:', error);
+    }
+  };
+
+  // Reset khi thay đổi tỉnh/quận
+  watch(selectedProvince, async (newProvince: string | null) => {
+    selectedDistrict.value = null;
+    selectedWard.value = null;
+    await fetchDistricts(newProvince);
   });
-});
 
+  watch(selectedDistrict, async (newDistrict: string | null) => {
+    selectedWard.value = null;
+    await fetchWards(newDistrict);
+  });
 
+  // Hàm reset
+  const reset = (): void => {
+    selectedProvince.value = region.code;
+    selectedDistrict.value = region.code;
+    selectedWard.value = region.code;
+    emit('update', { province: null, district: null, ward: null });
+  };
 
-defineExpose({ submit,reset });
+  // Hàm submit
+  const submit = (): void => {
+    emit('update', {
+      province: selectedProvince.value,
+      district: selectedDistrict.value,
+      ward: selectedWard.value,
+    });
+  };
 
-const emit = defineEmits(['update']);
+  // Theo dõi thay đổi và emit
+  watch([selectedProvince, selectedDistrict, selectedWard], () => {
+    emit('update', {
+      province: selectedProvince.value,
+      district: selectedDistrict.value,
+      ward: selectedWard.value,
+    });
+  });
+
+  // Expose các hàm
+  defineExpose({ submit, reset });
 </script>
 
 <template>
@@ -130,7 +153,12 @@ const emit = defineEmits(['update']);
     </a-select>
 
     <!-- Chọn Quận/Huyện -->
-    <a-select v-model:value="selectedDistrict" placeholder="Quận/huyện" class="w-100" :disabled="!districts.length">
+    <a-select
+      v-model:value="selectedDistrict"
+      placeholder="Quận/huyện"
+      class="w-100"
+      :disabled="!districts.length"
+    >
       <a-select-option v-for="district in districts" :key="district.code" :value="district.code">
         {{ district.fullName }}
       </a-select-option>

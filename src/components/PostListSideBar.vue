@@ -40,7 +40,7 @@ const areaOptions = [
     </a-card>
 
     <a-card title="📌 Xem theo diện tích">
-      <a-menu v-model:selectedKeys="areaFilter" mode="inline" class="filter-menu">
+      <a-menu v-model:selected-keys="areaFilter" mode="inline" class="filter-menu">
         <a-menu-item
           v-for="option in areaOptions"
           :key="option.label"

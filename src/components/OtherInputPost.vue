@@ -1,3 +1,6 @@
+/*
+ * File: OtherInputPost.vue
+ */
 <template>
   <div class="container mt-4">
     <a-card title="Thông Tin Phòng" class="room-info-card">
@@ -50,7 +53,8 @@
 
         <!-- Mô tả -->
         <a-form-item label="Mô tả">
-          <a-textarea v-model:value="formData.description" :rows="4" placeholder="Nhập mô tả chi tiết về phòng..."
+          <a-textarea
+v-model:value="formData.description" :rows="4" placeholder="Nhập mô tả chi tiết về phòng..."
                       show-count />
         </a-form-item>
 

@@ -14,11 +14,19 @@ export default {
     return apiClient.delete(`/post/${id}`);
   },
 
-  createPost(body:any) {
+  createPost(body: FormData) {
     return apiClient.post(`/post`, body, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    });
+  },
+
+  updatePost(id: string, body: FormData) {
+    return apiClient.put(`/post/${id}`, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
   },
 };

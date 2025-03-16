@@ -1,3 +1,7 @@
+/*
+* File: PostListView.vue
+*/
+
 <script setup>
   import { onMounted, ref } from 'vue'
   import SearchBar from '@/components/SearchBar.vue'
@@ -86,7 +90,7 @@
 </script>
 
 <template>
-  <SearchBar :defaultData="formData" @update="handleSearchBarUpdate" />
+  <SearchBar :default-data="formData" @update="handleSearchBarUpdate" />
 
   <a-layout>
     <a-layout>

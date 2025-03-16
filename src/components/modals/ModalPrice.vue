@@ -75,13 +75,13 @@ const updatePriceRange = (newValue) => {
         <label>Khoảng giá</label>
         <a-slider
           :value="[state.minPrice, state.maxPrice]"
-          @update:value="updatePriceRange"
           range
           :min="0"
           :max="20_000_000"
           :step="500_000"
           tooltip-placement="top"
           :tooltip-formatter="(value) => value.toLocaleString('vi-VN') + ' đ'"
+          @update:value="updatePriceRange"
         />
         <div class="text-center mt-2">
           {{ state.minPrice.toLocaleString('vi-VN') }} đ -
