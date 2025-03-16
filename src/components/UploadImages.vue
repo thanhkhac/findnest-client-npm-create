@@ -6,17 +6,16 @@
 
 
   interface ImageItem {
-    id?: string
+    id?: string | null
     path: string
     file?: File
     order: number
   }
 
-  const props = defineProps<{ images: { path: string; id: string }[] }>()
+  const props = defineProps<{ images: ImageItem[] }>()
   const emit = defineEmits(['update'])
 
   const imageToReturn = ref<ImageItem[]>([])
-
   onMounted(() => {
     imageToReturn.value = props.images.map((img, index) => ({
       id: img.id,
@@ -24,14 +23,6 @@
       file: undefined,
       order: index + 1
     }))
-
-    imageToReturn.value.push({
-      id: '1234',
-      path: 'https://findnest.site/Upload/ef79d8ac-a57f-42f7-a652-bdeec32624d4.jpg',
-      file: undefined,
-      order: 1
-    })
-
 
   })
 
@@ -58,7 +49,7 @@
     selectedFiles.forEach((file) => {
       const url = URL.createObjectURL(file)
       imageToReturn.value.push({
-        id: crypto.randomUUID(),
+        id: null,
         path: url,
         file,
         order: imageToReturn.value.length + 1

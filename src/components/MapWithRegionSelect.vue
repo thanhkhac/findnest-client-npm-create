@@ -1,19 +1,30 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import OsmMap from './OsmMap.vue';
   import RegionInput from '@/components/modals/RegionInput.vue'       // Đường dẫn đến OsmMap
 
   const emit = defineEmits(['update:data']);
 
-  // State lưu trữ dữ liệu từ RegionInput và OsmMap
-  const formData = ref({
-    provinceCode: null,
-    districtCode: null,
-    wardCode: null,
-    latitude: null,
-    longitude: null,
-    address:null
+  const props = defineProps({
+    initialData: {
+      type: Object,
+      default: () => ({
+        provinceCode: null,
+        districtCode: null,
+        wardCode: null,
+        latitude: null,
+        longitude: null,
+        address: null
+      })
+    }
   });
+
+  const formData = ref({ ...props.initialData });
+
+  watch(formData, (newValue) => {
+    emit('update:data', newValue)
+  }, { deep: true })
+
 
   // Xử lý khi RegionInput emit dữ liệu
   const handleRegionUpdate = ({ province, district, ward }) => {

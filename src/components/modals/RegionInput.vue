@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import RegionService from '@/api/services/regionService.js';
 
 const props = defineProps({
@@ -105,7 +105,7 @@ const submit = () => {
   });
 }
 
-watch([selectedProvince, selectedDistrict, selectedWard], async ([newProvince, newDistrict, newWard]) => {
+watch([selectedProvince, selectedDistrict, selectedWard], async () => {
   emit('update', {
     province: selectedProvince.value,
     district: selectedDistrict.value,

@@ -27,22 +27,23 @@ apiClient.interceptors.response.use(
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       const refreshToken = localStorage.getItem('refreshToken')
+      const accessToken = localStorage.getItem('accessToken')
 
       if (!refreshToken) {
-        console.warn('No refresh token available, logging out...')
+        console.warn('Không còn token')
         handleLogout()
         return Promise.reject(error)
       }
-
+      console.log('Refesh token token thành công')
       try {
-        const response = await axios.post(`${BASE_URL}/api/authentication/refresh`, { refreshToken })
+        const response = await axios.post(`${BASE_URL}/api/authentication/refresh`, { refreshToken, accessToken })
 
         const newAccessToken = response.data.accessToken
         localStorage.setItem('accessToken', newAccessToken)
 
         // Cập nhật token mới vào request bị lỗi
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-
+        console.log('Refesh token token thành công')
         return apiClient(originalRequest) // Gửi lại request ban đầu
       } catch (refreshError) {
         console.error('Refresh token failed:', refreshError)

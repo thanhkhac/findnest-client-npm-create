@@ -1,6 +1,6 @@
+<!-- src/views/CreatePost.vue -->
 <template>
-  <div >
-    <!-- Steps -->
+  <div>
     <a-steps :current="currentStep">
       <a-step title="Chọn vị trí" />
       <a-step title="Tải ảnh" />
@@ -8,27 +8,23 @@
     </a-steps>
 
     <div class="form-content mt-4">
-      <!-- Bước 1: Chọn vị trí -->
-      <div v-if="currentStep === 0">
-        <map-with-region-select v-model:latitude="formData.latitude" v-model:longitude="formData.longitude" />
+      <div v-show="currentStep === 0">
+        <map-with-region-select @update:data="handleMapDataUpdate" />
       </div>
 
-      <!-- Bước 2: Tải ảnh -->
-      <div v-if="currentStep === 1">
+      <div v-show="currentStep === 1">
         <upload-images :images="formData.images" @update="handleImageUpdate" />
       </div>
 
-      <!-- Bước 3: Nhập thông tin -->
-      <div v-if="currentStep === 2">
-        <OtherInputPost></OtherInputPost>
+      <div v-show="currentStep === 2">
+        <other-input-post @update-validated-data="handleOtherInputData" ref="otherInputPostRef" />
       </div>
     </div>
 
-    <!-- Nút điều hướng -->
     <div class="mt-4">
       <a-button v-if="currentStep > 0" @click="prevStep">Quay lại</a-button>
       <a-button type="primary" @click="nextStep" class="ml-2">
-        {{ currentStep < 2 ? "Tiếp theo" : "Hoàn tất" }}
+        {{ currentStep < 2 ? 'Tiếp theo' : 'Hoàn tất' }}
       </a-button>
     </div>
   </div>
@@ -40,10 +36,35 @@
   import MapWithRegionSelect from '@/components/MapWithRegionSelect.vue'
   import UploadImages from '@/components/UploadImages.vue'
   import OtherInputPost from '@/components/OtherInputPost.vue'
+  import postService from '@/api/services/postService'
 
   const currentStep = ref(0)
 
-  const formData = ref({
+  interface PostFormData {
+    title: string;
+    price: number | null;
+    isNegotiatedPrice: boolean;
+    address: string;
+    area: number | null;
+    description: string;
+    latitude: number | null;
+    longitude: number | null;
+    wardCode: string;
+    bedRoomCount: number | null;
+    bathRoomCount: number | null;
+    images: ImageItem[];
+    thumbnail: File | null;
+    image360: File | null;
+  }
+
+  interface ImageItem {
+    id?: string;
+    path: string;
+    file?: File;
+    order: number;
+  }
+
+  const formData = ref<PostFormData>({
     title: '',
     price: null,
     isNegotiatedPrice: false,
@@ -60,19 +81,76 @@
     image360: null
   })
 
-  // Cập nhật danh sách ảnh
+  const otherInputPostRef = ref()
+
   const handleImageUpdate = (updatedImages: any) => {
     formData.value.images = updatedImages
     console.log('Danh sách ảnh cập nhật:', formData.value.images)
   }
 
-  // Điều hướng bước
-  const nextStep = () => {
+  const handleMapDataUpdate = (data: any) => {
+    formData.value.wardCode = data.wardCode
+    formData.value.latitude = data.latitude
+    formData.value.longitude = data.longitude
+    formData.value.address = data.address
+  }
+
+  const handleOtherInputData = (data: any) => {
+    Object.assign(formData.value, data)
+    console.log('Dữ liệu gửi:', formData.value)
+  }
+
+  const nextStep = async () => {
+    if (currentStep.value === 0) {
+      if (!formData.value.wardCode) {
+        message.error('Vui lòng chọn khu vực!')
+        return
+      }
+      if (!formData.value.address) {
+        message.error('Vui lòng nhập địa chỉ!')
+        return
+      }
+    }
+
+    if (currentStep.value === 1) {
+      if (formData.value.images.length === 0) {
+        message.error('Vui lòng tải ảnh lên')
+        return
+      }
+    }
+
     if (currentStep.value < 2) {
       currentStep.value++
     } else {
-      message.success('Đăng tin thành công!')
-      console.log('Dữ liệu gửi:', formData.value)
+      try {
+        otherInputPostRef.value.validateForm()
+
+        const formDataToSend = new FormData()
+        for (const key in formData.value) {
+          const value = formData.value[key as keyof PostFormData]
+          if (key === 'images' && Array.isArray(value)) {
+            value.forEach((image, index) => {
+              if (image.file) {
+                formDataToSend.append(`images[${index}].file`, image.file)
+                formDataToSend.append(`images[${index}].order`, image.order.toString())
+              } else if (image.id) {
+                formDataToSend.append(`images[${index}].id`, image.id)
+                formDataToSend.append(`images[${index}].order`, image.order.toString())
+              }
+            })
+          } else if (value instanceof File) {
+            formDataToSend.append(key, value) // Nếu là File, giữ nguyên
+          } else if (value !== null && value !== undefined) {
+            formDataToSend.append(key, String(value)) // Ép kiểu số, boolean, string về string
+          }
+        }
+
+
+        await postService.createPost(formDataToSend)
+        message.success('Đăng tin thành công!')
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 
@@ -82,7 +160,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

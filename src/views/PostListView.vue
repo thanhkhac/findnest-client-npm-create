@@ -3,7 +3,7 @@
   import SearchBar from '@/components/SearchBar.vue'
   import ItemList from '@/components/ItemList.vue'
   import PostListSideBar from '@/components/PostListSideBar.vue'
-  import PostService from '@/api/services/post.js'
+  import PostService from '@/api/services/postService.ts'
 
   const formData = ref({
     isNegotiatedPrice: false,
@@ -102,7 +102,7 @@
           />
         </div>
       </a-layout-content>
-      <a-layout-sider class="d-md-block d-none bg-transparent" width="30%">
+      <a-layout-sider class="d-lg-block d-none bg-transparent" width="25%">
         <PostListSideBar />
       </a-layout-sider>
     </a-layout>
