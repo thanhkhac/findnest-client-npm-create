@@ -84,20 +84,6 @@
     { deep: true }
   );
 
-  watch(
-    () => props.initialData,
-    (newValue) => {
-      formData.value = {
-        provinceCode: newValue?.provinceCode ?? null,
-        districtCode: newValue?.districtCode ?? null,
-        wardCode: newValue?.wardCode ?? null,
-        latitude: newValue?.latitude ?? null,
-        longitude: newValue?.longitude ?? null,
-        address: newValue?.address ?? null,
-      };
-    },
-    { deep: true, immediate: true }
-  );
 
   watch(formData, (newValue) => {
     console.log('formData updated:', newValue);

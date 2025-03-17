@@ -20,6 +20,11 @@
         <other-input-post ref="otherInputPostRef" :initial-data="formData" @update-validated-data="handleOtherInputData" />
       </div>
     </div>
+    <div v-if="isLoading" >
+      <div class="vh-100">
+        <a-spin />
+      </div>
+    </div>
 
     <div class="mt-4">
       <a-button v-if="currentStep > 0" @click="prevStep">Quay lại</a-button>
@@ -210,7 +215,7 @@
       currentStep.value++;
     } else {
       try {
-        otherInputPostRef.value.validateForm();
+        await otherInputPostRef.value.validateForm();
 
         const formDataToSend = new FormData();
         for (const key in formData.value) {

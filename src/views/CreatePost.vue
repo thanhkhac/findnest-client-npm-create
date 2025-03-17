@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { nextTick, ref } from 'vue'
   import { message } from 'ant-design-vue'
   import MapWithRegionSelect from '@/components/MapWithRegionSelect.vue'
   import UploadImages from '@/components/UploadImages.vue'
@@ -125,8 +125,7 @@
       currentStep.value++
     } else {
       try {
-        otherInputPostRef.value.validateForm()
-
+        await otherInputPostRef.value.validateForm()
         const formDataToSend = new FormData()
         for (const key in formData.value) {
           const value = formData.value[key as keyof PostFormData]
