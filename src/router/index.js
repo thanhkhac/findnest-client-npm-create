@@ -15,7 +15,7 @@ import UserPostManage from '@/views/manage/UserPostManage.vue'
 import ChangePasswordView from '@/views/manage/ChangePasswordView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
