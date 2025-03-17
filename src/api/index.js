@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router/index.js'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -71,10 +72,12 @@ apiClient.interceptors.response.use(
   }
 )
 
-const handleLogout = (redirectUrl = '/login') => {
+const handleLogout = async (redirectUrl = '/login') => {
   localStorage.removeItem('accessToken')
   localStorage.removeItem('refreshToken')
-  window.location.href = redirectUrl
+  await router.push(redirectUrl).then(() => {
+    window.location.reload();
+  });
 }
 
 export { apiClient, BASE_URL }

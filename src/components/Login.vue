@@ -91,7 +91,10 @@
         await nextTick();
         await loginForm.value.validate();
         await login(credentials.value);
-        window.location.href = '/';
+        await router.push('/').then(() => {
+          window.location.reload();
+        });
+
       } catch (error) {
         console.error('Login failed:', error);
       }
