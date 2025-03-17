@@ -40,6 +40,7 @@
 
   const currentStep = ref(0)
 
+  //Class của form
   interface PostFormData {
     title: string;
     price: number | null;
@@ -57,6 +58,7 @@
     image360: File | null;
   }
 
+  //class của ảnh
   interface ImageItem {
     id?: string;
     path: string;
