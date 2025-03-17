@@ -42,6 +42,7 @@
   import UploadImages from '@/components/UploadImages.vue';
   import OtherInputPost from '@/components/OtherInputPost.vue';
   import postService from '@/api/services/postService';
+  import { useRoute } from 'vue-router'
 
   const isLoading = ref(true);
   const currentStep = ref(0);
@@ -253,7 +254,8 @@
   };
 
   onMounted(() => {
-    const postId = '76c3bc33-9978-4e93-ba2d-72e59d69d4b4';
+    const route = useRoute();
+    const postId = route.params.id;
     loadPostData(postId);
   });
 </script>

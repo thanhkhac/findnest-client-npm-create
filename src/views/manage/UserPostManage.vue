@@ -4,6 +4,7 @@
   import ItemList from '@/components/ItemList.vue'
   import PostListSideBar from '@/components/PostListSideBar.vue'
   import PostService from '@/api/services/postService.ts'
+  import PostUserManageItem from '@/components/PostUserManageItem.vue'
 
   const formData = ref({
     isNegotiatedPrice: false,
@@ -73,17 +74,6 @@
     }
   }
 
-  const submit = () => {
-    formData.value.pageNumber = 1
-    updateUrl()
-    fetchPosts()
-  }
-
-  const handleSearchBarUpdate = (searchBarData) => {
-    Object.assign(formData.value, searchBarData)
-    submit()
-  }
-
   const handlePageChange = (page) => {
     formData.value.pageNumber = page
     updateUrl()
@@ -98,12 +88,10 @@
 </script>
 
 <template>
-  <SearchBar :default-data="formData" @update="handleSearchBarUpdate" />
-
   <a-layout>
     <a-layout>
       <a-layout-content>
-        <ItemList :posts="posts" />
+        <PostUserManageItem :posts="posts" />
         <div class="d-flex justify-content-center">
           <a-pagination
             :current="formData.pageNumber"
@@ -114,9 +102,6 @@
           />
         </div>
       </a-layout-content>
-      <a-layout-sider class="d-lg-block d-none bg-transparent" width="25%">
-        <PostListSideBar />
-      </a-layout-sider>
     </a-layout>
   </a-layout>
 </template>
