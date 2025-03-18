@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
 
       if (!refreshToken) {
         console.warn('Không còn token')
-        handleLogout()
+        await handleLogout()
         return Promise.reject(error)
       }
 
@@ -56,7 +56,7 @@ apiClient.interceptors.response.use(
           console.error('Refresh token failed:', refreshError)
           isRefreshing = false
           refreshSubscribers = []
-          handleLogout()
+          await handleLogout()
           return Promise.reject(refreshError)
         }
       }

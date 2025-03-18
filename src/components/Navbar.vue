@@ -26,13 +26,13 @@
           <li class="nav-item">
             <RouterLink to="/post/create" class="nav-link text-dark my-hover-underline">Đăng bài</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink to="/search" class="nav-link text-dark my-hover-underline">Tìm kiếm</RouterLink>
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <RouterLink to="/search" class="nav-link text-dark my-hover-underline">Tìm kiếm</RouterLink>-->
+<!--          </li>-->
         </ul>
         <ul class="navbar-nav">
           <li v-if="user" class="nav-item">
-            <span class="nav-link">Hello, {{ user.fullName }}</span>
+            <router-link to="/profile" class="nav-link text-dark my-hover-underline">Hello, {{ user.fullName }}</router-link>
           </li>
           <li v-if="user" class="nav-item">
             <button class="btn btn-outline-danger" @click="handleLogout">Đăng xuất</button>

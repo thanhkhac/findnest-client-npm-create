@@ -39,7 +39,7 @@ const getImageUrl = (imagePath) => {
         xs: 1,
         sm: 1,
         md: 1,
-        lg: 2,
+        lg: 1,
         xl: 2,
         xxl: 2,
       }"
@@ -93,8 +93,18 @@ const getImageUrl = (imagePath) => {
             </div>
 
             <p>
-              <strong>Địa chỉ:</strong>
-              {{ item.regionAddress || 'Hà Nội' }}
+              <span
+                class="text"
+                :style="{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: 'inline-block',
+                  maxWidth: '100%',
+                }"
+              >
+                <strong>Địa chỉ:</strong> {{ item.regionAddress || 'Hà Nội' }}
+              </span>
             </p>
             <p>
               <strong>Giá:</strong>
@@ -115,8 +125,8 @@ const getImageUrl = (imagePath) => {
               <a-flex gap="small" align="center">
                 <a-avatar size="large" :src="getImageUrl(item.createdUser?.avatar)" />
                 <a-flex vertical>
-                  <a-typography-text strong>{{ item.createdUser?.fullName }} </a-typography-text>
-                  <a-typography-text type="secondary">{{ item.createdAt }} </a-typography-text>
+                  <a-typography-text strong>{{ item.createdUser?.fullName }}</a-typography-text>
+                  <a-typography-text type="secondary">{{ item.createdAt }}</a-typography-text>
                 </a-flex>
               </a-flex>
 
@@ -129,8 +139,8 @@ const getImageUrl = (imagePath) => {
                     {{ item.createdUser?.contactPhoneNumber }}
                   </a-typography-text>
                 </div>
-                <div>
-                  <a-button style="background-color: #0077cc; color: white">Zalo </a-button>
+                <div class="mt-1">
+                  <a-button style="background-color: #0077cc; color: white">Zalo</a-button>
                 </div>
               </div>
             </div>

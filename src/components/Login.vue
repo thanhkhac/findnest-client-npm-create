@@ -66,7 +66,7 @@
     <script setup>
     import { ref, nextTick } from 'vue';
     import { useRouter } from 'vue-router';
-    import { useAuth } from '@/composables/useAuth';
+    import { useAuth } from '@/composables/useAuth.js';
 
     const credentials = ref({
       username: '',

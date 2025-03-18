@@ -1,9 +1,10 @@
-// @ts-ignore
-import { apiClient } from '../index.js';
+import { apiClient } from '@/api/index.js';
 
 export default {
   getPost(id:any) {
-    return apiClient.get(`/post/${id}`);
+    return apiClient.get(`/post/${id}`).catch((error) => {
+      throw new Error('Không thể tải bài viết, vui lòng thử lại sau');
+    });
   },
 
   getPosts(params:any) {

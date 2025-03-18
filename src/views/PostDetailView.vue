@@ -15,7 +15,7 @@
   import { useRoute } from 'vue-router'; // Dùng useRoute để lấy params từ URL
   import axios from 'axios';
   import PostDetail from '@/components/PostDetail.vue';
-  import PostService from '@/api/services/postService.ts'
+  import PostService from '@/api/services/postService'
 
   // Khai báo biến reactive
   const post = ref<any>(null); // Dữ liệu bài đăng từ API

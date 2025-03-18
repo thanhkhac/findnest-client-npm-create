@@ -31,13 +31,15 @@
 </template>
 
 <script setup lang="ts">
-  import { nextTick, ref } from 'vue'
   import { message } from 'ant-design-vue'
   import MapWithRegionSelect from '@/components/MapWithRegionSelect.vue'
   import UploadImages from '@/components/UploadImages.vue'
   import OtherInputPost from '@/components/OtherInputPost.vue'
   import postService from '@/api/services/postService'
+  import { useRouter } from 'vue-router'
+  import { ref } from 'vue'
 
+  const router = useRouter()
   const currentStep = ref(0)
 
   //Class của form
@@ -147,9 +149,12 @@
         }
 
 
-        await postService.createPost(formDataToSend)
+        const result = await postService.createPost(formDataToSend)
+        const postId = result.data.id
         message.success('Đăng tin thành công!')
+        await router.push({ path: `/post/detail/${postId}` })
       } catch (e) {
+        message.success('Có lỗi xảy ra, vui lòng thử lại sau')
         console.error(e)
       }
     }

@@ -64,6 +64,11 @@
               </router-link>
               <a-button danger size="small">Xóa</a-button>
               <a-button size="small">Ẩn</a-button>
+              <router-link
+                :to="`/user/post/buy-plan/${item.id}`"
+              >
+                <a-button type="dashed" size="small">Mua plan</a-button>
+              </router-link>
             </a-flex>
           </a-flex>
         </a-list-item>

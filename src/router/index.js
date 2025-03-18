@@ -1,18 +1,17 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import AboutView from '@/views/AboutView.vue'
 import PostListView from '@/views/PostListView.vue'
 import LoginView from '@/views/LoginView.vue'
 import CreatePost from '@/views/CreatePost.vue'
 import UpdatePost from '@/views/UpdatePost.vue'
-import PostDetail from '@/components/PostDetail.vue'
 import PostDetailView from '@/views/PostDetailView.vue'
 import UserLayout from '@/layouts/UserLayout.vue'
 import ProfileInfoView from '@/views/manage/ProfileInfoView.vue'
 import DepositView from '@/views/manage/DepositView.vue'
 import UserPostManage from '@/views/manage/UserPostManage.vue'
 import ChangePasswordView from '@/views/manage/ChangePasswordView.vue'
+import BuyPlan from '@/views/BuyPlan.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,12 +21,12 @@ const router = createRouter({
       name: 'home',
       component: DefaultLayout,
       children: [
-        { path: '', component: HomeView },
+        { path: '', component: PostListView },
         { path: 'about', component: AboutView },
         { path: 'search', component: PostListView },
         { path: 'login', component: LoginView },
         { path: 'post/create', component: CreatePost },
-        { path: 'post/update/:id', component: UpdatePost },
+        { path: 'post/update/F:id', component: UpdatePost },
         { path: 'post/detail/:id', component: PostDetailView },
       ]
     },
@@ -39,6 +38,7 @@ const router = createRouter({
         { path: '/deposit', component: DepositView },
         { path: '/user/post', component: UserPostManage },
         { path: '/user/password', component: ChangePasswordView },
+        { path: '/user/post/buy-plan/:id', component: BuyPlan },
         // ...
       ],
     },

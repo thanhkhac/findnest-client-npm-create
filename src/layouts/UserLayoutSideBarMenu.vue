@@ -1,11 +1,6 @@
 /* * File: UserLayoutSideBar.vue */
 <template>
-  <a-menu
-    v-model:selectedKeys="selectedKeys"
-    theme="light"
-    mode="inline"
-    :inline-collapsed="collapsed"
-  >
+  <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
     <a-menu-item key="1">
       <home-outlined />
       <span>Tài khoản</span>

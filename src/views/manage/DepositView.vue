@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import paymentService from '@/api/services/userManageService'
+  import { message } from 'ant-design-vue' // Import API service
 
-  // State để quản lý dữ liệu
-  const currentBalance = ref(2500000) // Số dư hiện tại mặc định
+  // State
+  const currentBalance = ref(2500000) // Số dư hiện tại
   const depositAmount = ref('') // Số tiền nạp
   const qrCodeUrl = ref('') // URL mã QR
 
@@ -17,24 +19,26 @@
     }
   }
 
-  // Hàm tạo mã QR (giả lập, bạn có thể tích hợp API thực tế)
-  const generateQRCode = () => {
+  const generateQRCode = async () => {
     const amount = parseInt(depositAmount.value.replace(/[^0-9]/g, '')) || 0
-    if (amount > 0 && amount <= 100000000) {
-      // Giả lập URL mã QR (thay bằng API tạo QR thực tế)
-      qrCodeUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Nap%20tien%20${amount}VND`
-    } else {
-      alert('Vui lòng nhập số tiền hợp lệ (tối đa 100,000,000 VNĐ)!')
-      qrCodeUrl.value = ''
+    if (amount < 20000 || amount > 100000000) {
+      message.error('Vui lòng nhập số tiền hợp lệ (tối thiểu 20,000 VNĐ và tối đa 100,000,000 VNĐ)!')
+      return
+    }
+
+    try {
+      const response = await paymentService.depositMoney(amount)
+      qrCodeUrl.value = response.url // API trả về URL mã QR
+    } catch (error) {
+      message.error('Không thể tạo mã QR, vui lòng thử lại!')
     }
   }
+
 
   // Hàm reset sau khi nạp
   const reset = () => {
     depositAmount.value = ''
     qrCodeUrl.value = ''
-    // Cập nhật số dư (giả lập)
-    currentBalance.value += parseInt(depositAmount.value.replace(/[^0-9]/g, '')) || 0
   }
 </script>
 
@@ -58,6 +62,7 @@
           placeholder="Nhập số tiền"
           @input="handleDepositInput"
         />
+        <small class="text-muted">* Do chi phí hệ thống, số tiền nạp tối thiểu là 20,000 VNĐ.</small>
       </div>
 
       <button @click="generateQRCode" class="btn btn-primary w-100 mb-3" :disabled="!depositAmount">
@@ -75,25 +80,3 @@
   </div>
 </template>
 
-<style scoped>
-  /* Thêm style tùy chỉnh nếu cần */
-  .card {
-    border: none;
-    border-radius: 10px;
-  }
-
-  .img-thumbnail {
-    border-radius: 8px;
-  }
-
-  @media (max-width: 480px) {
-    .card {
-      padding: 15px;
-    }
-
-    .img-thumbnail {
-      width: 120px;
-      height: 120px;
-    }
-  }
-</style>
