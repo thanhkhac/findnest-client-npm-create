@@ -2,7 +2,7 @@
   import { onMounted, ref } from 'vue'
   import SearchBar from '@/components/SearchBar.vue'
   import ItemList from '@/components/ItemList.vue'
-  import PostListSideBar from '@/components/PostListSideBar.vue'
+  import PostListSideBar from '@/layouts/PostListSideBar.vue'
   import PostService from '@/api/services/postService.ts'
 
   const formData = ref({
@@ -59,14 +59,12 @@
       const response = await PostService.getPosts(formData.value)
       posts.value = response.data
 
-      // Lấy thông tin phân trang từ header x-pagination
-      const paginationHeader = response.headers['x-pagination']
-      if (paginationHeader) {
-        const paginationData = JSON.parse(paginationHeader)
-        formData.value.pageNumber = paginationData.CurrentPage
-        formData.value.pageSize = paginationData.PageSize
-        totalPosts.value = paginationData.TotalCount
-        totalPages.value = paginationData.TotalPages
+      const pagination = response.pagination
+      if (pagination) {
+        formData.value.pageNumber = pagination.CurrentPage
+        formData.value.pageSize = pagination.PageSize
+        totalPosts.value = pagination.TotalCount
+        totalPages.value = pagination.TotalPages
       }
     } catch (error) {
       console.error('Lỗi khi lấy danh sách bài viết:', error)

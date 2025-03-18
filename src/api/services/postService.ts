@@ -1,4 +1,8 @@
-import { apiClient } from '@/api/index.js';
+/*
+ * File: postService.ts
+ */
+import { apiClient } from '@/api';
+import { PostListResponse } from '@/types/post'
 
 export default {
   getPost(id:any) {
@@ -7,11 +11,20 @@ export default {
     });
   },
 
-  getPosts(params:any) {
-    return apiClient.get('/post', { params });
+  getPosts(params: any): Promise<PostListResponse> {
+    return apiClient.get('/post', { params }).then(response => {
+      const pagination = response.headers["x-pagination"]
+        ? JSON.parse(response.headers["x-pagination"])
+        : null;
+
+      return {
+        data: response.data,
+        pagination
+      };
+    });
   },
 
-  deletePost(id:any) {
+  deletePost(id: string): Promise<void> {
     return apiClient.delete(`/post/${id}`);
   },
 

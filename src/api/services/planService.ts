@@ -1,5 +1,8 @@
+/*
+ * File: planService.ts
+ */
 // @ts-ignore
-import { apiClient } from '@/api/index'
+import { apiClient } from '@/api/index.ts'
 
 interface ApiErrorResponse {
   status: string

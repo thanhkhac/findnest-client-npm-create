@@ -1,5 +1,8 @@
+/*
+ * File: useAuth.ts
+ */
 import { ref, onMounted } from 'vue'
-import AuthService from '@/api/services/auth'
+import AuthService from '@/api/services/authService'
 
 // Define the User interface based on the provided structure
 interface User {
@@ -43,9 +46,9 @@ export function useAuth() {
       localStorage.setItem('refreshToken', response.data.refreshToken)
       await fetchUser()
       return response
-    } catch (error) {
+    } catch (error : any) {
       console.error('Login error:', error)
-      throw error
+      throw new Error('Sai tài khoản hoặc mật khẩu')
     }
   }
 

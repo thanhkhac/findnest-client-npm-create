@@ -1,4 +1,7 @@
-import apiClient from '../index';
+/*
+ * File: user.js
+ */
+import apiClient from '@/api/index';
 
 export default {
   getUser(id) {

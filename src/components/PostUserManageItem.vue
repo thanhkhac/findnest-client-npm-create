@@ -1,6 +1,6 @@
 <script setup>
   import { Rate } from 'ant-design-vue'
-  import { BASE_URL } from '../api/index.js'
+  import { BASE_URL } from '../api/index.ts'
 
   defineProps({
     posts: {
@@ -60,14 +60,13 @@
                 :to="`/post/update/${item.id}`"
                 :style="{ color: getBorderColor(item.planPriority) }"
               >
-                <a-button type="primary" size="small">Sửa</a-button>
+                <a-button  size="small">Sửa</a-button>
               </router-link>
-              <a-button danger size="small">Xóa</a-button>
-              <a-button size="small">Ẩn</a-button>
+              <a-button type="primary" danger size="small">Xóa</a-button>
               <router-link
                 :to="`/user/post/buy-plan/${item.id}`"
               >
-                <a-button type="dashed" size="small">Mua plan</a-button>
+                <a-button type="dashed" size="small">Mua gói</a-button>
               </router-link>
             </a-flex>
           </a-flex>

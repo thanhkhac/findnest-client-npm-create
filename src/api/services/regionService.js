@@ -1,4 +1,7 @@
-import apiClient from '@/api/index.js';
+/*
+ * File: regionService.js
+ */
+import apiClient from '@/api/index.ts';
 
 const RegionService = {
   getProvinces() {

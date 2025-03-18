@@ -172,7 +172,7 @@
     MessageOutlined,
     FacebookOutlined,
   } from '@ant-design/icons-vue';
-  import { BASE_URL } from '@/api/index';
+  import { BASE_URL } from '@/api';
   import MapView from './MapView.vue';
   import Image360View from './Image360View.vue'; // Import component ảnh 360
 

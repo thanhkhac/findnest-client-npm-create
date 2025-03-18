@@ -58,6 +58,7 @@
     images: ImageItem[];
     thumbnail: File | null;
     image360: File | null;
+    isAiDescription: boolean
   }
 
   //class của ảnh
@@ -82,7 +83,8 @@
     bathRoomCount: null,
     images: [],
     thumbnail: null,
-    image360: null
+    image360: null,
+    isAiDescription: false
   })
 
   const otherInputPostRef = ref()

@@ -42,7 +42,7 @@
   import UploadImages from '@/components/UploadImages.vue';
   import OtherInputPost from '@/components/OtherInputPost.vue';
   import postService from '@/api/services/postService';
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
 
   const isLoading = ref(true);
   const currentStep = ref(0);
@@ -64,6 +64,7 @@
     images: ImageItem[];
     thumbnail: File | string | null;
     image360: File | string | null;
+    isAiDescription: boolean
   }
 
   interface ImageItem {
@@ -120,6 +121,7 @@
     images: [],
     thumbnail: null,
     image360: null,
+    isAiDescription: false
   });
 
   const mapInitialData = ref({
@@ -158,6 +160,7 @@
         })),
         thumbnail: postData.thumbnail,
         image360: postData.image360,
+        isAiDescription: false
       };
 
       mapInitialData.value = {
@@ -192,6 +195,8 @@
     Object.assign(formData.value, data);
     console.log('Dữ liệu gửi:', formData.value);
   };
+
+  const router = useRouter()
 
   const nextStep = async () => {
     if (currentStep.value === 0) {
@@ -238,8 +243,10 @@
           }
         }
 
-        await postService.updatePost(formData.value.id!, formDataToSend);
+        var result = await postService.updatePost(formData.value.id!, formDataToSend);
         message.success('Cập nhật bài đăng thành công!');
+        const postId = result.data.id
+        await router.push({ path: `/post/detail/${postId}` })
       } catch (e) {
         console.error('Lỗi khi cập nhật:', e);
         message.error('Cập nhật bài đăng thất bại!');

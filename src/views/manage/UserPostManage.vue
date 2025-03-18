@@ -1,10 +1,7 @@
 <script setup>
   import { onMounted, ref } from 'vue'
-  import SearchBar from '@/components/SearchBar.vue'
-  import ItemList from '@/components/ItemList.vue'
-  import PostListSideBar from '@/components/PostListSideBar.vue'
-  import PostService from '@/api/services/postService.ts'
   import PostUserManageItem from '@/components/PostUserManageItem.vue'
+  import userManageService from '@/api/services/userManageService.js'
 
   const formData = ref({
     isNegotiatedPrice: false,
@@ -57,17 +54,15 @@
 
   const fetchPosts = async () => {
     try {
-      const response = await PostService.getPosts(formData.value)
+      const response = await userManageService.getOwnerPosts(formData.value)
       posts.value = response.data
 
-      // Lấy thông tin phân trang từ header x-pagination
-      const paginationHeader = response.headers['x-pagination']
-      if (paginationHeader) {
-        const paginationData = JSON.parse(paginationHeader)
-        formData.value.pageNumber = paginationData.CurrentPage
-        formData.value.pageSize = paginationData.PageSize
-        totalPosts.value = paginationData.TotalCount
-        totalPages.value = paginationData.TotalPages
+      const pagination = response.pagination
+      if (pagination) {
+        formData.value.pageNumber = pagination.CurrentPage
+        formData.value.pageSize = pagination.PageSize
+        totalPosts.value = pagination.TotalCount
+        totalPages.value = pagination.TotalPages
       }
     } catch (error) {
       console.error('Lỗi khi lấy danh sách bài viết:', error)

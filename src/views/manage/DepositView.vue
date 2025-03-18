@@ -1,12 +1,13 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import paymentService from '@/api/services/userManageService'
-  import { message } from 'ant-design-vue' // Import API service
+  import { message } from 'ant-design-vue'
+  import { useAuth } from '@/composables/useAuth'
 
   // State
-  const currentBalance = ref(2500000) // Số dư hiện tại
-  const depositAmount = ref('') // Số tiền nạp
-  const qrCodeUrl = ref('') // URL mã QR
+  const { user, fetchUser } = useAuth() // Lấy thông tin user từ useAuth
+  const depositAmount = ref<string>('') // Số tiền nạp
+  const qrCodeUrl = ref<string>('') // URL mã QR
 
   // Hàm xử lý khi nhập số tiền
   const handleDepositInput = (event: Event) => {
@@ -19,6 +20,7 @@
     }
   }
 
+  // Hàm tạo mã QR
   const generateQRCode = async () => {
     const amount = parseInt(depositAmount.value.replace(/[^0-9]/g, '')) || 0
     if (amount < 20000 || amount > 100000000) {
@@ -34,11 +36,13 @@
     }
   }
 
-
   // Hàm reset sau khi nạp
-  const reset = () => {
+  const reset = async () => {
     depositAmount.value = ''
     qrCodeUrl.value = ''
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 </script>
 
@@ -49,7 +53,9 @@
 
       <div class="card bg-danger text-white text-center mb-4 p-3">
         <h6 class="mb-0">Số dư hiện tại</h6>
-        <h4 class="mb-0">{{ currentBalance.toLocaleString() }} VNĐ</h4>
+        <h4 class="mb-0">
+          {{ user?.balance !== undefined ? Number(user.balance).toLocaleString() : '0' }} VNĐ
+        </h4>
       </div>
 
       <div class="mb-3">
@@ -79,4 +85,3 @@
     </div>
   </div>
 </template>
-

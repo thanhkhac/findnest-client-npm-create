@@ -63,6 +63,9 @@
 
         <!-- Mô tả -->
         <a-form-item label="Mô tả">
+          <a-switch v-model:checked="formData.isAiDescription" class="mb-3"
+                    checked-children="AI tự điền"
+                    un-checked-children="Tự điền"></a-switch>
           <a-textarea
             v-model:value="formData.description"
             :rows="4"
@@ -150,6 +153,7 @@
     description: string;
     thumbnail: File | string | null;
     image360: File | string | null;
+    isAiDescription: boolean;
   }
 
   // Khởi tạo formData với giá trị mặc định
@@ -163,6 +167,7 @@
     description: '',
     thumbnail: null,
     image360: null,
+    isAiDescription: false
   });
 
   // Tham chiếu tới form để validate
@@ -255,6 +260,7 @@
           description: newInitialData.description ?? formData.value.description,
           thumbnail: newInitialData.thumbnail ?? formData.value.thumbnail,
           image360: newInitialData.image360 ?? formData.value.image360,
+          isAiDescription: false
         };
       }
     },

@@ -67,6 +67,7 @@
     import { ref, nextTick } from 'vue';
     import { useRouter } from 'vue-router';
     import { useAuth } from '@/composables/useAuth.js';
+    import { message } from 'ant-design-vue'
 
     const credentials = ref({
       username: '',
@@ -94,9 +95,8 @@
         await router.push('/').then(() => {
           window.location.reload();
         });
-
       } catch (error) {
-        console.error('Login failed:', error);
+        message.error("Sai mật khẩu hoặc tên đăng nhập");
       }
     };
     </script>

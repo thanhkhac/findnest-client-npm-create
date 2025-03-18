@@ -12,6 +12,7 @@ import DepositView from '@/views/manage/DepositView.vue'
 import UserPostManage from '@/views/manage/UserPostManage.vue'
 import ChangePasswordView from '@/views/manage/ChangePasswordView.vue'
 import BuyPlan from '@/views/BuyPlan.vue'
+import RegisterView from '@/views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,12 +22,13 @@ const router = createRouter({
       name: 'home',
       component: DefaultLayout,
       children: [
-        { path: '', component: PostListView },
+        { path: '/', component: PostListView },
         { path: 'about', component: AboutView },
         { path: 'search', component: PostListView },
         { path: 'login', component: LoginView },
+        { path: 'register', component: RegisterView },
         { path: 'post/create', component: CreatePost },
-        { path: 'post/update/F:id', component: UpdatePost },
+        { path: 'post/update/:id', component: UpdatePost },
         { path: 'post/detail/:id', component: PostDetailView },
       ]
     },

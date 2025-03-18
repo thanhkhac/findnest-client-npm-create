@@ -18,9 +18,15 @@
     </a-layout-sider>
 
     <a-layout>
-      <a-layout-header class="header">
+      <a-layout-header class="header d-flex justify-content-between">
         <menu-unfold-outlined v-if="collapsed" class="trigger" @click="toggleSidebar" />
         <menu-fold-outlined v-else class="trigger" @click="toggleSidebar" />
+        <div v-if="user" class="user-info ms-auto d-flex align-items-center">
+          <span class="me-3">Xin chào, {{ user.fullName }}</span>
+          <span class="balance text-success fw-bold">
+            {{ user.balance !== undefined ? `${Number(user.balance).toLocaleString()} VNĐ` : 'N/A' }}
+          </span>
+        </div>
       </a-layout-header>
 
       <a-layout-content class="content">
@@ -33,11 +39,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import UserLayoutSideBarMenu from './UserLayoutSideBarMenu.vue'
+import { useAuth } from '@/composables/useAuth'
 
 const collapsed = ref(false)
+
+const { user, fetchUser } = useAuth()
+
+
+onMounted(() => {
+  fetchUser() // Lấy thông tin người dùng khi component được mount
+})
 
 const toggleSidebar = () => {
   collapsed.value = !collapsed.value

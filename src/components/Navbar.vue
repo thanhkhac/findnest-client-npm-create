@@ -32,13 +32,17 @@
         </ul>
         <ul class="navbar-nav">
           <li v-if="user" class="nav-item">
-            <router-link to="/profile" class="nav-link text-dark my-hover-underline">Hello, {{ user.fullName }}</router-link>
+            <router-link to="/profile" class="nav-link text-dark my-hover-underline">{{ user.fullName }}</router-link>
+            <span class="mx-2 ">
+               Số dư: {{ user.balance !== undefined ? `${Number(user.balance).toLocaleString()} VNĐ` : 'N/A' }}
+            </span>
           </li>
           <li v-if="user" class="nav-item">
             <button class="btn btn-outline-danger" @click="handleLogout">Đăng xuất</button>
           </li>
           <li v-else class="nav-item">
             <router-link to="/login" class="nav-link text-dark my-hover-underline">Đăng nhập</router-link>
+            <router-link to="/register" class="nav-link text-dark my-hover-underline">Đăng ký</router-link>
           </li>
         </ul>
       </div>

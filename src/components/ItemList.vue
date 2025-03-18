@@ -1,6 +1,6 @@
 <script setup>
 import { Rate } from 'ant-design-vue'
-import { BASE_URL } from '../api/index.js'
+import { BASE_URL } from '../api/index.ts'
 
 defineProps({
   posts: {
