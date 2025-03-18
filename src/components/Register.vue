@@ -37,7 +37,7 @@
       </section>
     </div>
     <div class="col-md-4">
-      <img src="https://findnest.site/image/Register.jpg" class="w-100 d-none d-md-block" />
+      <img src="@/assets/image/Login.jpg" class="w-100 d-none d-md-block" />
     </div>
   </div>
 </template>

@@ -17,7 +17,7 @@
           </p>
         </div>
         <div class="col-md-6">
-          <img src="https://findnest.site/image/Login.jpg" alt="FindNest Team" class="img-fluid rounded shadow">
+          <img src="@/assets/image/Login.jpg" alt="FindNest Team" class="img-fluid rounded shadow">
         </div>
       </div>
     </section>
