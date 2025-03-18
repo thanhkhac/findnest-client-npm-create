@@ -4,7 +4,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import router from '@/router/index.js';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://103.9.77.15:8080';
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: `${BASE_URL}/api`,

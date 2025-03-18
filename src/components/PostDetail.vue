@@ -211,7 +211,7 @@
 
   // Tính toán địa chỉ đầy đủ
   const fullAddress = computed(() => {
-    return `${props.postData.address}, ${props.postData.ward.fullName}, ${props.postData.district.fullName}, ${props.postData.province.fullName}`;
+    return `${props.postData.address}, ${props.postData.ward?.fullName}, ${props.postData.district?.fullName}, ${props.postData.province?.fullName}`;
   });
 
   // URL cho ảnh thumbnail

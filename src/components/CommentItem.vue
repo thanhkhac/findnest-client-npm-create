@@ -2,7 +2,7 @@
 <template>
   <div class="comment-item" :class="{ 'reply': comment.parentId }">
     <div class="comment-header">
-      <img src="http://localhost:8080/upload/avatar/19402274_1384916484961097_2564800140801868622_o_549883a774a04e58a1c382e308fca283.jpg" class="avatar" />
+      <img :src="avatarUrl" class="avatar" />
       <div class="user-info">
         <span class="username">{{ comment.createdBy?.fullName }}</span>
         <span class="timestamp">{{ formatDate(comment.createdAt) }}</span>
@@ -45,9 +45,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue'
   import { useAuth } from '@/composables/useAuth';
   import CommentService from '@/api/services/commentService';
+  import { BASE_URL } from '@/api'
 
   // Define props với type chính xác
   interface Comment {
@@ -57,7 +58,7 @@
     content: string;
     createdBy: {
       fullName: string;
-      avatar?: string;
+      avatar?: string | null;
     };
     createdAt: string;
     replyCount: number;
@@ -68,6 +69,16 @@
     comment: Comment;
     postId: string;
   }>();
+
+  const avatarUrl = computed(() => {
+    if (!props.comment.createdBy) {
+      return 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg';
+    }
+    return props.comment.createdBy.avatar
+      ? `${BASE_URL}${props.comment.createdBy.avatar}`
+      : 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg';
+  });
+
 
   // Define emits
   const emit = defineEmits<{

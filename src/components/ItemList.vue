@@ -65,7 +65,7 @@ const getImageUrl = (imagePath) => {
                   {{ item.title }}
                 </router-link>
                 <div class="rating">
-                  <Rate :value="item.rating || 4.5" allow-half disabled class="custom-rate" />
+                  <Rate :value="item.rating || 5" allow-half disabled class="custom-rate" />
                 </div>
               </div>
             </template>
