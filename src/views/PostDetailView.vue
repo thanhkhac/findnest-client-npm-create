@@ -6,7 +6,10 @@
       <a-spin tip="Đang tải dữ liệu..." />
     </div>
     <!-- Hiển thị PostDetail khi dữ liệu đã tải xong -->
-    <post-detail v-else :post-data="post" />
+    <div v-else>
+      <post-detail :post-data="post" />
+      <comment-section :post-id="postId" />
+    </div>
   </div>
 </template>
 
@@ -16,6 +19,7 @@
   import axios from 'axios';
   import PostDetail from '@/components/PostDetail.vue';
   import PostService from '@/api/services/postService'
+  import CommentSection from '@/components/CommentSection.vue'
 
   // Khai báo biến reactive
   const post = ref<any>(null); // Dữ liệu bài đăng từ API

@@ -1,7 +1,7 @@
 /*
  * File: useAuth.ts
  */
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import AuthService from '@/api/services/authService'
 
 // Define the User interface based on the provided structure
@@ -38,6 +38,8 @@ interface UserResponse {
 
 export function useAuth() {
   const user = ref<User | null>(null)
+
+  const isAuthenticated = computed(() => !!user.value && !!localStorage.getItem('accessToken'));
 
   const login = async (credentials: Credentials): Promise<LoginResponse> => {
     try {
@@ -86,8 +88,9 @@ export function useAuth() {
 
   return {
     user,
+    isAuthenticated,
     login,
     logout,
     fetchUser
-  }
+  };
 }
