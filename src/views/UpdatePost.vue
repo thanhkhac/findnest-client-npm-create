@@ -43,6 +43,7 @@
   import OtherInputPost from '@/components/OtherInputPost.vue';
   import postService from '@/api/services/postService';
   import { useRoute, useRouter } from 'vue-router'
+  import { BASE_URL } from '@/api'
 
   const isLoading = ref(true);
   const currentStep = ref(0);
@@ -155,7 +156,7 @@
         bathRoomCount: postData.bathRoomCount,
         images: postData.images.map((img) => ({
           id: img.id,
-          path: 'http://localhost:8080' + img.path,
+          path: BASE_URL + img.path,
           order: img.order,
         })),
         thumbnail: postData.thumbnail,
