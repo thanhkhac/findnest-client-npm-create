@@ -154,7 +154,7 @@
         const result = await postService.createPost(formDataToSend)
         const postId = result.data.id
         message.success('Đăng tin thành công!')
-        await router.push({ path: `/post/detail/${postId}` })
+        // await router.push({ path: `/post/detail/${postId}` })
       } catch (e) {
         message.success('Có lỗi xảy ra, vui lòng thử lại sau')
         console.error(e)
