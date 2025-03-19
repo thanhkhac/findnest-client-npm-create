@@ -101,6 +101,9 @@
   <a-layout>
     <a-layout>
       <a-layout-content>
+        <div class="ps-4 pt-3">
+          <h5 class="text-secondary">{{totalPosts}} kết quả</h5>
+        </div>
         <ItemList :posts="posts" />
         <div class="d-flex justify-content-center">
           <a-pagination
