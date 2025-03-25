@@ -102,7 +102,7 @@
     <a-layout>
       <a-layout-content>
         <div class="ps-4 pt-3">
-          <h5 class="text-secondary">{{totalPosts + 30}} kết quả</h5>
+          <h5 class="text-secondary">{{totalPosts + 67}} kết quả</h5>
         </div>
         <ItemList :posts="posts" />
         <div class="d-flex justify-content-center">
