@@ -60,6 +60,10 @@
       message.error('Cập nhật thông tin thất bại, vui lòng thử lại!')
     }
   }
+
+
+  const isLandlord = ref(false);
+
 </script>
 
 <template>
@@ -105,6 +109,15 @@
       <div class="mb-3 form-floating">
         <input v-model="localFullname" type="text" class="form-control" id="fullnameInput" />
         <label for="fullnameInput">Họ và tên</label>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Bạn là:</label>
+        <div class="d-flex align-items-center">
+          <a-switch v-model:checked="isLandlord"
+                    un-checked-children="Người thuê"
+                    checked-children="Chủ trọ"/>
+        </div>
       </div>
 
       <button @click="updateProfile" class="btn btn-danger w-100">Cập nhật Thông tin</button>

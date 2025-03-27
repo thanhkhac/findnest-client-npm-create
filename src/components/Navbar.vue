@@ -26,6 +26,12 @@
           <li class="nav-item">
             <RouterLink to="/post/create" class="nav-link text-dark my-hover-underline">Đăng bài</RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink to="/roommate/post/create" class="nav-link text-dark my-hover-underline">Đăng tin tìm bạn</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/roommate" class="nav-link text-dark my-hover-underline">Tìm bạn cùng phòng</RouterLink>
+          </li>
 <!--          <li class="nav-item">-->
 <!--            <RouterLink to="/search" class="nav-link text-dark my-hover-underline">Tìm kiếm</RouterLink>-->
 <!--          </li>-->

@@ -17,6 +17,15 @@
           <a-form-item name="password">
             <a-input v-model:value="newUser.password" class="form-control" placeholder="Mật khẩu" type="password" />
           </a-form-item>
+          <!-- Thêm switch tại đây -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Đăng ký với tư cách:</label>
+            <div class="d-flex align-items-center">
+              <a-switch v-model:checked="isLandlord"
+              un-checked-children="Người thuê"
+              checked-children="Chủ trọ"/>
+            </div>
+          </div>
           <div class="mb-3">
             <a-button size="large" type="primary" html-type="submit" class="w-100 btn btn-lg btn-danger rounded-pill fw-bold">
               Đăng ký
@@ -46,9 +55,8 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { message } from 'ant-design-vue';
-  import userManageService from '@/api/services/userManageService';
-  import auth from '@/api/services/authService.ts'
   import authService from '@/api/services/authService.ts'
+  const isLandlord = ref(false);
 
   const newUser = ref({
     fullName: '',
@@ -82,7 +90,6 @@
         const { message: errorMessage, errors } = error.response.data;
 
         if (errors) {
-          // Duyệt qua từng lỗi và xử lý theo key
           Object.keys(errors).forEach((key) => {
             if (key === 'PasswordTooShort') {
               message.error('Mật khẩu phải có ít nhất 8 ký tự.');

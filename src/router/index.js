@@ -13,6 +13,8 @@ import UserPostManage from '@/views/manage/UserPostManage.vue'
 import ChangePasswordView from '@/views/manage/ChangePasswordView.vue'
 import BuyPlan from '@/views/BuyPlan.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import CreatePostRoomatePost from '@/views/CreatePostRoomatePost.vue'
+import RoomatePostListView from '@/views/RoomatePostListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,8 @@ const router = createRouter({
         { path: 'login', component: LoginView },
         { path: 'register', component: RegisterView },
         { path: 'post/create', component: CreatePost },
+        { path: 'roommate/post/create', component: CreatePostRoomatePost },
+        { path: 'roommate', component: RoomatePostListView },
         { path: 'post/update/:id', component: UpdatePost },
         { path: 'post/detail/:id', component: PostDetailView },
       ]
