@@ -17,6 +17,7 @@ interface User {
   zalo: string | null;
   facebook: string | null;
   paymentCode: string;
+  roles: string[];
 }
 
 // Define credentials interface for login
@@ -38,7 +39,7 @@ interface UserResponse {
 
 export function useAuth() {
   const user = ref<User | null>(null)
-
+  const userRoles = computed(() => user.value?.roles || []);
   const isAuthenticated = computed(() => !!user.value && !!localStorage.getItem('accessToken'));
 
   const login = async (credentials: Credentials): Promise<LoginResponse> => {
@@ -89,6 +90,7 @@ export function useAuth() {
   return {
     user,
     isAuthenticated,
+    userRoles,
     login,
     logout,
     fetchUser

@@ -124,5 +124,4 @@
 </template>
 
 <style scoped>
-  /* Có thể giữ nguyên hoặc thêm style nếu cần */
 </style>

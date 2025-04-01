@@ -144,9 +144,9 @@
               }
             })
           } else if (value instanceof File) {
-            formDataToSend.append(key, value) // Nếu là File, giữ nguyên
+            formDataToSend.append(key, value)
           } else if (value !== null && value !== undefined) {
-            formDataToSend.append(key, String(value)) // Ép kiểu số, boolean, string về string
+            formDataToSend.append(key, String(value)) // Ép các kiểu dữ liệu khác về string
           }
         }
 

@@ -15,6 +15,7 @@ import BuyPlan from '@/views/BuyPlan.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import CreatePostRoomatePost from '@/views/CreatePostRoomatePost.vue'
 import RoomatePostListView from '@/views/RoomatePostListView.vue'
+import { useAuth } from '@/composables/useAuth.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,17 @@ const router = createRouter({
       ],
     },
   ],
-})
+});
+
+router.beforeEach((to, from, next) => {
+  const { isAuthenticated, userRoles } = useAuth();
+
+  if (to.meta.role && !userRoles.value.includes(to.meta.role)) {
+    return next('/unauthorized'); // Không có quyền → Chuyển đến trang lỗi
+  }
+
+  next();
+});
+
 
 export default router

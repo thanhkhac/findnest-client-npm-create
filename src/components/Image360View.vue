@@ -9,25 +9,23 @@
 <script setup lang="ts">
   import { ref, onMounted, onUnmounted } from 'vue';
   import { Viewer } from '@photo-sphere-viewer/core';
-  import '@photo-sphere-viewer/core/index.css'; // Import CSS của Photo Sphere Viewer
+  import '@photo-sphere-viewer/core/index.css';
 
   // Define props
   const props = defineProps<{
-    image360Path: string | null; // Đường dẫn ảnh 360
-    baseUrl: string; // URL cơ sở
+    image360Path: string | null;
+    baseUrl: string;
   }>();
 
-  // Ref để gắn viewer
   const viewer = ref<HTMLElement | null>(null);
   let photoSphereViewer: Viewer | null = null;
 
-  // Khởi tạo viewer khi component được mount
   onMounted(() => {
     if (props.image360Path && viewer.value) {
       photoSphereViewer = new Viewer({
         container: viewer.value,
         panorama: `${props.baseUrl}${props.image360Path}`,
-        navbar: ['zoom', 'move', 'fullscreen'], // Thanh điều hướng với zoom, di chuyển, fullscreen
+        navbar: ['zoom', 'move', 'fullscreen'],
         size: {
           width: '100%',
           height: '500px',
@@ -36,7 +34,6 @@
     }
   });
 
-  // Hủy viewer khi component bị unmount
   onUnmounted(() => {
     if (photoSphereViewer) {
       photoSphereViewer.destroy();

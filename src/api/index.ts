@@ -14,21 +14,24 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
+//Check xem có đang refresh token hay không
 let isRefreshing = false;
+// Danh sách request chờ refresh token
 let refreshSubscribers: ((token: string) => void)[] = [];
 
 // Hàm thêm subscriber khi refresh token
-const subscribeTokenRefresh = (cb: (token: string) => void) => {
-  refreshSubscribers.push(cb);
+const subscribeTokenRefresh = (callBack: (token: string) => void) => {
+  refreshSubscribers.push(callBack);
 };
 
-// Hàm thông báo token mới cho tất cả subscriber
+// Thông báo token mới cho tất cả subscriber
 const onRefreshed = (token: string) => {
   refreshSubscribers.forEach((cb) => cb(token));
   refreshSubscribers = [];
 };
 
 // Kiểm tra và thêm token vào request
+// Interceptor: chạy trước mỗi reqeust
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem('accessToken');
   if (token && config.headers) {
