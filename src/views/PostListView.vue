@@ -96,6 +96,16 @@
 </script>
 
 <template>
+
+  <a-alert
+    message="Thông báo quan trọng"
+    description="Trang web này sẽ chính thức đóng cửa vào ngày 16/04/2025. Chúng tôi xin chân thành cảm ơn các bạn đã tin tưởng và sử dụng trang web trong suốt thời gian qua!"
+    type="warning"
+    show-icon
+    closable
+    class="mb-4"
+  />
+
   <SearchBar :default-data="formData" @update="handleSearchBarUpdate" />
 
   <a-layout>
